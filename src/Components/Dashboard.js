@@ -17,7 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-
+import CategoryIcon from '@material-ui/icons/Category';
 import { Route , Link } from 'react-router-dom';
 import Products from '../Components/Products';
 import Items from '../Components/ItemPage';
@@ -180,7 +180,7 @@ export default function MiniDrawer() {
         </ListItem>
         <ListItem button component={ Link } to="/dashboard/category">
           <ListItemIcon>
-            <MenuBookIcon />
+            <CategoryIcon />
           </ListItemIcon>
           <ListItemText primary='Category' />
         </ListItem>

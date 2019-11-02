@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,7 +20,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://www.instagram.com/natachicken/">
-        Nata Chicken
+        716Mart
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -28,7 +28,7 @@ function Copyright() {
   );
 }
 
-const classes = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
 
  
   '@global': {
@@ -55,26 +55,42 @@ const classes = makeStyles(theme => ({
   },
 }));
 
-// export default function SignIn() {
-class Login extends React.Component {
-  // const classes = useStyles();
-  state = {
-    isLogin : false,
-  }
+function Login() {
+  const classes = useStyles();
+  const [isLogin, setIsLogin] = useState(false)
+  const [input, setInput] = useState({username:'', password:''})
 
-  componentDidMount (){
-    if(localStorage.getItem('token')!= null) {
-      this.setState({isLogin:true})
-    }else{
-      this.setState({isLogin:false})
-    }
+  function postLogin (e) {
+    e.preventDefault();
+    Axios.post ('http://localhost:5000/user/login', input)
+    .then (response=> {
+        if(response.data.status==200){
+          localStorage.setItem('token',response.data.result.token)
+          setIsLogin(true)
+        }
+    })
+    .catch (error => console.log (error));
   }
-
-render() {
   
-  if(this.state.isLogin){
-    return <Redirect to="/dashboard" />
-  }
+  useEffect(()=>{
+      if(localStorage.getItem('token') != null){
+        setIsLogin(true)
+        // return <Redirect to="/dashboard" />
+      }else{
+        setIsLogin(false)
+      }
+  },[])
+
+  
+    if(isLogin){
+        return <Redirect to="/dashboard" />
+      }
+  
+  
+
+  const handleChange = name => e => {
+    setInput({ ...input, [name]: e.target.value });
+};
 
   return (
     <Container component="main" maxWidth="xs">
@@ -84,35 +100,25 @@ render() {
           <RestaurantMenuIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Nata Chicken
+          716Mart
         </Typography>
         <form className={classes.form} noValidate
-        onSubmit={ e => {
-          e.preventDefault();
-          Axios.post ('http://localhost:5000/user/login', this.state)
-          .then (response=> {
-              if(response.data.status==200){
-                localStorage.setItem('token',response.data.result.token)
-                this.setState({isLogin:true})
-              }
-          })
-          .catch (error => console.log (error));
-      }}
+        onSubmit={postLogin}
         >
           <TextField
-            onChange={ e => this.setState({username : e.target.value})}
+            onChange={handleChange('username')}
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Username"
             name="email"
             autoComplete="email"
             autoFocus
           />
           <TextField
-            onChange={ e => this.setState({password : e.target.value})}
+            onChange={handleChange('password')}
             variant="outlined"
             margin="normal"
             required
@@ -150,6 +156,6 @@ render() {
     </Container>
   );
 }
-}
+
 
 export default Login;

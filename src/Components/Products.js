@@ -21,9 +21,13 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
 
 import { useSelector , useDispatch } from "react-redux";
 import { getProducts, updateProducts , deleteProduct} from "../Public/Redux/Actions/Products";
+import { red } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles({
@@ -46,6 +50,7 @@ function Products(props) {
   const [alert, setAlert] = useState(false);
   const [open,setOpen] = useState(false);
   const [category, setCategory] = useState([]);
+  
 
   const getCategory=()=>{
     Axios.get('http://localhost:5000/category')
@@ -70,13 +75,6 @@ function Products(props) {
         handleAlertClose()
     })
   }
-
-  // const handleAddProductSuccess=()=> {
-  //       // const product = products.splice(0)
-  //       // product.push(prod)
-  //       setProducts(products)
-  //   }
-// edit data
 
     const handleClickOpen = (row) => {
       setOpen(true)
@@ -106,13 +104,6 @@ function Products(props) {
       getCategory()
     },[])
 
-    // useEffect(()=> {
-    //   props.dispatch(getProducts())
-    //   getCategory()
-    // },[products])
-
-
-  console.log(selectedRow)
 
   return (
     <Paper className={classes.root}>
@@ -128,7 +119,7 @@ function Products(props) {
             <TableCell align="right">Category</TableCell>
             <TableCell align="right">Price</TableCell>
             <TableCell align="right">Quantity</TableCell>
-            <TableCell align="right">Action</TableCell>
+            <TableCell align="center">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -144,12 +135,11 @@ function Products(props) {
               <TableCell align="right">{item.quantity}</TableCell>
               <TableCell align="center">
                   <Button onClick={ () => handleClickOpen(item)}>
-                      Edit
+                      <EditIcon />
                   </Button>
-              ||
                   {/* <Button onClick={ () => handleAlertOpen(item)}> */}
                   <Button onClick={ () => handleAlertOpen(item)}>
-                      Delete
+                      <DeleteIcon style={{color:red}} />
                   </Button>
               </TableCell>
             </TableRow>

@@ -52,7 +52,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-// class SignUp extends React.Component {
 function SignUp() {
   const initialState = {
     name: '',
@@ -133,8 +132,8 @@ function SignUp() {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-              > Sign Up
-                {/* <Link href="/"> Sign Up</Link> */}
+              >
+                <Link href="/"> Sign Up</Link>
               </Button>
               <Grid container>
                 <Grid item>

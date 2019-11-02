@@ -1,10 +1,10 @@
 import Axios from "axios"
 
 
-export const getProducts = () => {
+export const getProducts = (input) => {
     return {
         type : 'GET_PRODUCT',
-        payload : Axios.get('http://localhost:5000/product')
+        payload : Axios.get('http://localhost:5000/product',{params : input })
     };
 };
 
