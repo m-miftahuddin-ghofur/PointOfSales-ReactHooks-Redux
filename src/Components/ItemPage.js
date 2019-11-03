@@ -142,7 +142,6 @@ const ItemsPage = (props) => {
                     variant="outlined"
                     
                   />
-                
               </FormControl>
             </Paper>
           </Grid>

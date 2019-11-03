@@ -113,8 +113,6 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
-
-  // return
   return (
     <div className={classes.root}>
       <CssBaseline />
